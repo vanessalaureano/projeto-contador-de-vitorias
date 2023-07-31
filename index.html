@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider Tanks</title>
+
+    <!-- Resetar o CSS -->
+    <link rel="stylesheet" href="style/reset.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/logo-spidertanks.ico" type="image/x-icon">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header>
+
+    </header>
+
+    <h1>Spider Tanks</h1>
+
+    <!-- Formulário -->
+
+    <main>
+        <form id="time-formulario">
+            <input type="text" id="time-receber" placeholder="Digite o nome do time">
+            <button type="submit" id="time-adicionar" class="botao">Adicionar time</button>
+        </form>
+
+        <!-- Lista de jogadores -->
+
+        <div id="times-lista" class="lista-oculta">
+            <table>
+                <thead>
+                    <tr class="tabela-titulo">
+                        <th scope="col">Check-in</th>
+                        <th scope="col">Time</th>
+                        <th></th>
+                        <th scope="col">Vitórias por hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Conteúdo dos times será adicionado dinamicamente aqui -->
+                </tbody>
+            </table>
+
+            <button id="botao-remover-todos" class="botao-remover botao" title="Remover todos os times">
+                Excluir times
+            </button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        Desenvolvido por <a href="https://github.com/vanessalaureano" target="_blank">Vanessa Laureano</a>
+    </footer>
+
+    <script src="script/script.js"></script>
+
+</body>
+
+</html>
