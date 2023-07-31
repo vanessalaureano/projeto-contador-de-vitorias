@@ -1,153 +1,116 @@
-// Variável para armazenar os dados dos times
-let times = [];
+// 1. Capturar elementos do DOM
+const formTime = document.getElementById("time-formulario");
+const timeReceberInput = document.getElementById("time-receber");
+const timesLista = document.getElementById("times-lista");
 
-// Função para mostrar o conteúdo da tabela
-function mostrarConteudo() {
-  const lista = document.getElementById('times-lista');
-  lista.classList.remove('lista-oculta');
-}
-
-// Função para atualizar a tabela com os dados dos times
-function atualizarTabela() {
-  const tbody = document.querySelector('tbody');
-  tbody.innerHTML = '';
-
-  times.forEach((time) => {
-    const tr = document.createElement('tr');
-    tr.classList.add('tabela-conteudo');
-
-    const tdHorarioCheckIn = document.createElement('td');
-    tdHorarioCheckIn.textContent = time.checkIn;
-    tr.appendChild(tdHorarioCheckIn);
-
-    const tdNomeTime = document.createElement('td');
-    tdNomeTime.textContent = time.nome;
-    tr.appendChild(tdNomeTime);
-
-    const tdVitorias = document.createElement('td');
-    const botaoSubtrair = document.createElement('button');
-    botaoSubtrair.classList.add('botao-subtrair', 'botao');
-    botaoSubtrair.textContent = '-';
-    botaoSubtrair.addEventListener('click', () => subtrairVitoria(time));
-    tdVitorias.appendChild(botaoSubtrair);
-
-    const spanVitorias = document.createElement('span');
-    spanVitorias.textContent = time.vitorias;
-    tdVitorias.appendChild(spanVitorias);
-
-    const botaoSomar = document.createElement('button');
-    botaoSomar.classList.add('botao-somar', 'botao');
-    botaoSomar.textContent = '+';
-    botaoSomar.addEventListener('click', () => somarVitoria(time));
-    tdVitorias.appendChild(botaoSomar);
-
-    tr.appendChild(tdVitorias);
-
-    const tdVitoriasPorHora = document.createElement('td');
-    tdVitoriasPorHora.textContent = `${calcularVitoriasPorHora(time)} vitórias por hora`;
-    tr.appendChild(tdVitoriasPorHora);
-
-    const tdBotaoRemover = document.createElement('td');
-    const botaoRemover = document.createElement('button');
-    botaoRemover.classList.add('botao-remover', 'botao');
-    botaoRemover.textContent = 'Excluir';
-    botaoRemover.addEventListener('click', () => removerTime(time));
-    tdBotaoRemover.appendChild(botaoRemover);
-    tr.appendChild(tdBotaoRemover);
-
-    tbody.appendChild(tr);
-  });
-}
-
-// Função para adicionar um novo time
+// 2. Definir uma função para adicionar um novo time
 function adicionarTime(event) {
-  event.preventDefault();
-  const timeReceber = document.getElementById('time-receber');
-  const nomeTime = timeReceber.value.trim();
-  if (nomeTime === '') return;
+  event.preventDefault(); // Evitar o comportamento padrão do formulário
 
-  const horarioCheckIn = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-  const novoTime = {
-    nome: nomeTime,
-    checkIn: horarioCheckIn,
-    vitorias: 0,
-    ultimaAtualizacao: new Date().getTime(),
-  };
+  const nomeTime = timeReceberInput.value;
+  if (nomeTime.trim() === "") {
+    // Verificar se o campo está vazio
+    alert("Por favor, digite o nome do time.");
+    return;
+  }
 
-  times.push(novoTime);
-  timeReceber.value = '';
+  // Criar a estrutura HTML para adicionar o time na tabela
+  const tr = document.createElement("tr");
+  tr.classList.add("tabela-conteudo");
 
-  mostrarConteudo();
-  atualizarTabela();
+  const tdHorario = document.createElement("td");
+  tdHorario.textContent = new Date().toLocaleTimeString("pt-BR");
+  tr.appendChild(tdHorario);
+
+  const tdNomeTime = document.createElement("td");
+  tdNomeTime.textContent = nomeTime;
+  tr.appendChild(tdNomeTime);
+
+  const tdVitorias = document.createElement("td");
+  tdVitorias.innerHTML = `
+    <button class="botao-subtrair botao">-</button>
+    <span class="vitorias-quantidade">0</span>
+    <button class="botao-somar botao">+</button>
+  `;
+  tr.appendChild(tdVitorias);
+
+  const tdBotaoRemover = document.createElement("td");
+  const botaoRemover = document.createElement("button");
+  botaoRemover.classList.add("botao-remover", "botao");
+  botaoRemover.textContent = "Excluir";
+  botaoRemover.setAttribute("title", "Remover time");
+  tdBotaoRemover.appendChild(botaoRemover);
+  tr.appendChild(tdBotaoRemover);
+
+  timesLista.querySelector("tbody").appendChild(tr);
+
+  // Limpar o campo de inserção do nome do time
+  timeReceberInput.value = "";
+
+  // Salvar os dados no LocalStorage
+  salvarDadosNoLocalStorage();
 }
 
-// Função para remover um time
-function removerTime(time) {
-  times = times.filter((t) => t !== time);
-  atualizarTabela();
+// 3. Definir uma função para atualizar o contador de vitórias
+function atualizarContador(event) {
+  const botaoClicado = event.target;
+  const vitoriasSpan = botaoClicado.parentNode.querySelector(".vitorias-quantidade");
+  let vitorias = parseInt(vitoriasSpan.textContent);
+
+  if (botaoClicado.classList.contains("botao-subtrair")) {
+    vitorias = Math.max(0, vitorias - 1);
+  } else if (botaoClicado.classList.contains("botao-somar")) {
+    vitorias++;
+  }
+
+  vitoriasSpan.textContent = vitorias;
+
+  // Salvar os dados no LocalStorage
+  salvarDadosNoLocalStorage();
 }
 
-// Função para somar uma vitória
-function somarVitoria(time) {
-  time.vitorias++;
-  time.ultimaAtualizacao = new Date().getTime();
-  atualizarTabela();
-}
+// 4. Definir uma função para remover um time
+function removerTime(event) {
+  const botaoRemover = event.target;
+  if (botaoRemover.classList.contains("botao-remover")) {
+    const tr = botaoRemover.closest(".tabela-conteudo");
+    tr.remove();
 
-// Função para subtrair uma vitória
-function subtrairVitoria(time) {
-  if (time.vitorias > 0) {
-    time.vitorias--;
-    time.ultimaAtualizacao = new Date().getTime();
-    atualizarTabela();
+    // Salvar os dados no LocalStorage
+    salvarDadosNoLocalStorage();
   }
 }
 
-// Função para calcular as vitórias por hora
-function calcularVitoriasPorHora(time) {
-  const agora = new Date().getTime();
-  const tempoDecorrido = (agora - new Date(time.ultimaAtualizacao).getTime()) / (1000 * 60 * 60);
-  return (time.vitorias / tempoDecorrido).toFixed(2);
-}
-
-// Função para remover todos os times
+// 5. Definir uma função para remover todos os times
 function removerTodosTimes() {
-  times = [];
-  atualizarTabela();
+  timesLista.querySelector("tbody").innerHTML = "";
+
+  // Salvar os dados no LocalStorage
+  salvarDadosNoLocalStorage();
 }
 
-// Evento para adicionar time quando o formulário for submetido
-const formulario = document.getElementById('time-formulario');
-formulario.addEventListener('submit', adicionarTime);
+// 6. Inicialização do site ao carregar a página
+function iniciarSite() {
+  // Adicionar os event listeners aos botões
+  formTime.addEventListener("submit", adicionarTime);
+  timesLista.addEventListener("click", atualizarContador);
+  timesLista.addEventListener("click", removerTime);
+  const botaoRemoverTodos = document.getElementById("botao-remover-todos");
+  botaoRemoverTodos.addEventListener("click", removerTodosTimes);
 
-// Evento para remover todos os times quando o botão "Excluir times" for clicado
-const botaoRemoverTodos = document.getElementById('botao-remover-todos');
-botaoRemoverTodos.addEventListener('click', removerTodosTimes);
-
-// Carregar dados do LocalStorage (se houver)
-const dadosLocalStorage = JSON.parse(localStorage.getItem('spiderTanksTimes'));
-if (dadosLocalStorage) {
-  times = dadosLocalStorage;
-  mostrarConteudo();
-  atualizarTabela();
+  // Recuperar dados do LocalStorage e preencher a tabela
+  const dadosSalvos = localStorage.getItem("timesData");
+  if (dadosSalvos) {
+    timesLista.querySelector("tbody").innerHTML = dadosSalvos;
+  }
 }
 
-// Salvar dados no LocalStorage sempre que a tabela for atualizada
-function salvarNoLocalStorage() {
-  localStorage.setItem('spiderTanksTimes', JSON.stringify(times));
+// Salvar os dados da tabela no LocalStorage
+function salvarDadosNoLocalStorage() {
+  const tabelaHTML = timesLista.querySelector("tbody").innerHTML;
+  localStorage.setItem("timesData", tabelaHTML);
 }
 
-// Atualizar dados no LocalStorage a cada 1 hora
-setInterval(salvarNoLocalStorage, 1000 * 60 * 60);
-
-// Código para tornar o site responsivo com bordas finas
-// ...
-
-// Fazer o ajuste responsivo é um processo mais complexo e pode envolver a adição de regras CSS
-// para adaptar a aparência do site em diferentes tamanhos de tela. Aqui, deixei essa parte em aberto,
-// pois depende de como você deseja que o site se comporte em dispositivos menores. Você pode
-// usar media queries no CSS para aplicar estilos específicos para diferentes tamanhos de tela,
-// ou pode usar alguma biblioteca de CSS como o Bootstrap para facilitar a responsividade.
-// Se quiser, posso fornecer um exemplo básico de media queries para começar, mas é importante
-// considerar as necessidades específicas do design do seu site.
+// Chamada para iniciar o site ao carregar a página
+iniciarSite();
 
