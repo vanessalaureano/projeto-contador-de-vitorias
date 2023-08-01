@@ -7,10 +7,11 @@
     <title>Spider Tanks</title>
 
     <!-- Resetar o CSS -->
-    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="../styles/reset.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/tank.css">
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="images/logo-spidertanks.ico" type="image/x-icon">
@@ -62,7 +63,47 @@
 
     <h1>Spider Tanks</h1>
 
-    <main>Em manutenção</main>
+    <!-- Formulário de tanks -->
+    <main class="container">
+        <form id="tank-formulario">
+            <input type="text" id="capitao-receber" placeholder="Digite o nome do capitão">
+            <select id="raridade-receber">
+                <option value="Ancient">Ancient</option>
+                <option value="Legendary">Legendary</option>
+                <option value="Epic">Epic</option>
+                <option value="Rare">Rare</option>
+                <option value="Uncommon">Uncommon</option>
+                <option value="Common">Common</option>
+            </select>
+            <input type="text" id="tank-receber" placeholder="Digite o nome do tank">
+            <button id="tank-adicionar" class="botao">Adicionar tank</button>
+        </form>
+
+        <!-- Lista de tanks -->
+        <div id="tanks-lista" class="lista-oculta">
+            <table>
+                <thead>
+                    <tr class="tabela-titulo">
+                        <th scope="col">Check</th>
+                        <th scope="col">Capitão</th>
+                        <th scope="col">Raridade</th>
+                        <th scope="col">Tank</th>
+                        <th scope="col">Vitórias</th>
+                        <th scope="col">Pontos por vitória</th>
+                        <th scope="col">Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aqui serão adicionados os tanks dinamicamente pelo JavaScript -->
+                </tbody>
+            </table>
+
+            <!-- Botão de remover todos os tanks -->
+            <button id="botao-remover-todos" class="botao-remover botao" title="Remover todos os tanks">
+                Excluir tanks
+            </button>
+        </div>
+    </main>
 
     <footer class="footer">
         Desenvolvido por <a href="https://github.com/vanessalaureano" target="_blank">Vanessa Laureano</a>
@@ -72,7 +113,7 @@
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
         crossorigin="anonymous"></script>
 
-    <script src="script/script.js"></script>
+    <script src="script/tank.js"></script>
 
 </body>
 

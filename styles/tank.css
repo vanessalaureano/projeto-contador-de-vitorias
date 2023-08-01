@@ -1,0 +1,49 @@
+/* Estilos do tank.html */
+
+/* Estilos da tabela */
+#tanks-lista {
+    display: none;
+    /* Inicia a tabela oculta */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead th {
+    background-color: var(--cor-principal);
+    color: var(--cor-fonte-secundaria);
+    padding: 10px;
+    text-align: center;
+}
+
+tbody td {
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid var(--cor-de-fundo-secundaria);
+    white-space: nowrap;
+}
+
+/* Estilos do botão de remover tanks */
+#botao-remover-todos {
+    margin-top: 20px;
+}
+
+/* Estilos do botão de editar pontos por vitória */
+.pontos-input {
+    width: 40px;
+    text-align: center;
+}
+
+/* Estilos do botão de check */
+.check-box {
+    width: 20px;
+    height: 20px;
+    margin: 0 auto;
+}
+
+.checked {
+    background-color: var(--cor-de-fundo-secundaria);
+}
