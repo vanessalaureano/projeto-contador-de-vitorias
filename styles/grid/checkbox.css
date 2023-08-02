@@ -1,4 +1,4 @@
-Estilos do campo "Check"
+/* Estilos do campo "Check" */
 #tanks-lista tbody td:first-child input[type="checkbox"] {
     /* Estilização do checkbox */
     margin-right: 10px;
