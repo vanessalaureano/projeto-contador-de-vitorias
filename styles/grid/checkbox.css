@@ -13,8 +13,8 @@ input[type="checkbox"] {
     position: relative;
     top: -1px;
     background-color: #fff;
-  }
-  
-  input[type="checkbox"]:checked {
-    background-color: #007bff;
-  }
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--cor-principal);
+}
