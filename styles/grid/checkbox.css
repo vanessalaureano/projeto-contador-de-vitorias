@@ -1,4 +1,4 @@
-5. Remover aparência padrão do checkbox do navegador
+/* Remover aparência padrão do checkbox do navegador */
 input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
