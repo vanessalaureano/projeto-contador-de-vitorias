@@ -1,25 +1,4 @@
-/* Estilos do campo "Check" */
-#tanks-lista tbody td:first-child input[type="checkbox"] {
-    /* Estilização do checkbox */
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-/* Estilos do checkbox marcado */
-
-#tanks-lista tbody td:first-child input[type="checkbox"]:checked::before {
-    /* Adicionar o estilo desejado para o checkbox marcado */
-    content: "\f058";
-    /* Código do ícone de check do Bootstrap (usando a fonte Bootstrap Icons) */
-    font-family: 'Bootstrap Icons';
-    font-size: 1.2rem;
-    color: var(--cor-principal);
-    vertical-align: middle;
-}
-
-
-
-/* 5. Remover aparência padrão do checkbox do navegador
+5. Remover aparência padrão do checkbox do navegador
 input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
@@ -38,4 +17,4 @@ input[type="checkbox"] {
   
   input[type="checkbox"]:checked {
     background-color: #007bff;
-  } */
+  }
