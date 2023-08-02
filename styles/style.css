@@ -142,6 +142,7 @@ footer a:hover {
 }
 
 /* Estilos do checkbox marcado */
+
 #tanks-lista tbody td:first-child input[type="checkbox"]:checked::before {
     /* Adicionar o estilo desejado para o checkbox marcado */
     content: "\f058";
