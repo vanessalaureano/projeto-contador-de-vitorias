@@ -16,5 +16,5 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-    background-color: var(--cor-principal);
+    background-color: var(--cor-secundaria);
 }

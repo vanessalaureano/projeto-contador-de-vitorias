@@ -112,15 +112,18 @@ function atualizarContador(event) {
 function marcarCheckbox(event) {
   const checkboxClicado = event.target;
   const tr = checkboxClicado.closest("tr");
+  const pontosInput = tr.querySelector("td:nth-child(6) input[type='number']");
 
   if (checkboxClicado.checked) {
     tr.style.backgroundColor = "var(--cor-de-fundo-secundaria)";
+    pontosInput.style.backgroundColor = "var(--cor-de-fundo-secundaria)";
   } else {
     tr.style.backgroundColor = "";
+    pontosInput.style.backgroundColor = "";
   }
 
   // Salvar o estado do checkbox no LocalStorage
-  salvarDadosNoLocalStorage();
+  salvarCheckboxNoLocalStorage();
 }
 
 // 6. Função para remover um tank
