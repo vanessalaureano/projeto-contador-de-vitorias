@@ -1,20 +1,24 @@
-// Capturar elementos do DOM
+// 1. Capturar elementos do DOM
 const formTank = document.getElementById("tank-formulario");
-const capitaoReceberInput = document.getElementById("capitao-receber");
-const raridadeReceberSelect = document.getElementById("raridade-receber");
-const tankReceberInput = document.getElementById("tank-receber");
+const tankCapitaoReceberInput = document.getElementById("tank-capitao-receber");
+const tankRaridadeReceberSelect = document.getElementById("tank-raridade-receber");
+const tankNomeReceberInput = document.getElementById("tank-nome-receber");
+const tankAdicionarButton = document.getElementById("tank-adicionar");
 const tanksLista = document.getElementById("tanks-lista");
+const tankListaBody = document.getElementById("tank-lista-body");
+const tankBotaoRemoverTodos = document.getElementById("tank-botao-remover-todos");
 
-// Função para adicionar um novo tank
+// 2. Definir uma função para adicionar um novo tank
 function adicionarTank(event) {
   event.preventDefault(); // Evitar o comportamento padrão do formulário
 
-  // Capturar os valores preenchidos pelo usuário
-  const capitao = capitaoReceberInput.value;
-  const raridade = raridadeReceberSelect.value;
-  const tank = tankReceberInput.value;
+  const capitao = tankCapitaoReceberInput.value;
+  const raridade = tankRaridadeReceberSelect.value;
+  const nomeTank = tankNomeReceberInput.value;
+  const vitorias = 0;
+  const pontosPorVitoria = 0;
 
-  if (capitao.trim() === "" || tank.trim() === "") {
+  if (capitao.trim() === "" || nomeTank.trim() === "") {
     // Verificar se os campos estão vazios
     alert("Por favor, preencha todos os campos.");
     return;
@@ -24,13 +28,15 @@ function adicionarTank(event) {
   const tr = document.createElement("tr");
   tr.classList.add("tabela-conteudo");
 
-  // Adicionar checkbox para o campo "Check"
   const tdCheck = document.createElement("td");
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
-  checkbox.checked = false;
-  checkbox.addEventListener("change", function () {
-    tr.style.backgroundColor = checkbox.checked ? "var(--cor-de-fundo-secundaria)" : "";
+  checkbox.addEventListener("change", () => {
+    if (checkbox.checked) {
+      tr.style.backgroundColor = "var(--cor-de-fundo-secundaria)";
+    } else {
+      tr.style.backgroundColor = "";
+    }
   });
   tdCheck.appendChild(checkbox);
   tr.appendChild(tdCheck);
@@ -43,119 +49,103 @@ function adicionarTank(event) {
   tdRaridade.textContent = raridade;
   tr.appendChild(tdRaridade);
 
-  const tdTank = document.createElement("td");
-  tdTank.textContent = tank;
-  tr.appendChild(tdTank);
+  const tdNomeTank = document.createElement("td");
+  tdNomeTank.textContent = nomeTank;
+  tr.appendChild(tdNomeTank);
 
-  // Campo "Vitórias"
   const tdVitorias = document.createElement("td");
   tdVitorias.innerHTML = `
-        <button class="botao-subtrair botao">-</button>
-        <span class="vitorias-quantidade">0</span>
-        <button class="botao-somar botao">+</button>
-    `;
-  tdVitorias.addEventListener("click", atualizarContador); // Adicionar event listener para atualizar o contador de vitórias
+    <button class="botao-subtrair botao">-</button>
+    <span class="vitorias-quantidade">${vitorias}</span>
+    <button class="botao-somar botao">+</button>
+  `;
   tr.appendChild(tdVitorias);
 
-  // Campo "Pontos por vitória"
   const tdPontosPorVitoria = document.createElement("td");
-  const pontosPorVitoriaInput = document.createElement("input");
-  pontosPorVitoriaInput.type = "number";
-  pontosPorVitoriaInput.value = 0;
-  tdPontosPorVitoria.appendChild(pontosPorVitoriaInput);
+  tdPontosPorVitoria.innerHTML = `
+    <input type="number" class="pontos-por-vitoria-input" value="${pontosPorVitoria}">
+  `;
   tr.appendChild(tdPontosPorVitoria);
 
-  // Botão de "Excluir"
   const tdBotaoRemover = document.createElement("td");
   const botaoRemover = document.createElement("button");
   botaoRemover.classList.add("botao-remover", "botao");
   botaoRemover.textContent = "Excluir";
   botaoRemover.setAttribute("title", "Remover tank");
-  botaoRemover.addEventListener("click", removerTank); // Adicionar event listener para remover o tank
+  botaoRemover.addEventListener("click", removerTank);
   tdBotaoRemover.appendChild(botaoRemover);
   tr.appendChild(tdBotaoRemover);
 
-  // Adicionar o tank na tabela
-  tanksLista.querySelector("tbody").appendChild(tr);
+  tankListaBody.appendChild(tr);
 
-  // Limpar os campos do formulário
-  capitaoReceberInput.value = "";
-  tankReceberInput.value = "";
-
-  // Exibir a tabela de tanks
-  tanksLista.classList.remove("lista-oculta");
+  // Limpar os campos de inserção do tank
+  tankCapitaoReceberInput.value = "";
+  tankNomeReceberInput.value = "";
 
   // Salvar os dados no LocalStorage
   salvarDadosNoLocalStorage();
 }
 
-// Função para atualizar o contador de vitórias
+// 3. Definir uma função para atualizar o contador de vitórias
 function atualizarContador(event) {
   const botaoClicado = event.target;
+  const vitoriasSpan = botaoClicado.parentNode.querySelector(".vitorias-quantidade");
+  let vitorias = parseInt(vitoriasSpan.textContent);
+
   if (botaoClicado.classList.contains("botao-subtrair")) {
-    const vitoriasSpan = botaoClicado.nextElementSibling;
-    let vitorias = parseInt(vitoriasSpan.textContent);
     vitorias = Math.max(0, vitorias - 1);
-    vitoriasSpan.textContent = vitorias;
   } else if (botaoClicado.classList.contains("botao-somar")) {
-    const vitoriasSpan = botaoClicado.previousElementSibling;
-    let vitorias = parseInt(vitoriasSpan.textContent);
     vitorias++;
-    vitoriasSpan.textContent = vitorias;
   }
+
+  vitoriasSpan.textContent = vitorias;
 
   // Salvar os dados no LocalStorage
   salvarDadosNoLocalStorage();
 }
 
-// Função para remover um tank
+// 4. Definir uma função para remover um tank
 function removerTank(event) {
   const botaoRemover = event.target;
   if (botaoRemover.classList.contains("botao-remover")) {
     const tr = botaoRemover.closest(".tabela-conteudo");
     tr.remove();
 
-    // Verificar se existem mais tanks na tabela
-    const tanksNaTabela = tanksLista.querySelectorAll(".tabela-conteudo");
-    if (tanksNaTabela.length === 0) {
-      // Se não existir mais tanks, ocultar a tabela
-      tanksLista.classList.add("lista-oculta");
-    }
-
     // Salvar os dados no LocalStorage
     salvarDadosNoLocalStorage();
   }
 }
 
-// Função para remover todos os tanks
+// 5. Definir uma função para remover todos os tanks
 function removerTodosTanks() {
-  tanksLista.querySelector("tbody").innerHTML = "";
-
-  // Ocultar a tabela de tanks
-  tanksLista.classList.add("lista-oculta");
+  tankListaBody.innerHTML = "";
 
   // Salvar os dados no LocalStorage
   salvarDadosNoLocalStorage();
 }
 
-// Inicialização do site ao carregar a página
+// 6. Inicialização do site ao carregar a página
 function iniciarSite() {
-  // Adicionar os event listeners aos botões
-  formTank.addEventListener("submit", adicionarTank);
-  const botaoRemoverTodos = document.getElementById("botao-remover-todos");
-  botaoRemoverTodos.addEventListener("click", removerTodosTanks);
+  // Adicionar o event listener ao botão "Adicionar tank"
+  tankAdicionarButton.addEventListener("click", adicionarTank);
+
+  // Adicionar os event listeners aos botões da tabela
+  tanksLista.addEventListener("click", atualizarContador);
+  tanksLista.addEventListener("click", removerTank);
+
+  // Corrigir o seletor para o botão de remover todos os tanks
+  tankBotaoRemoverTodos.addEventListener("click", removerTodosTanks);
 
   // Recuperar dados do LocalStorage e preencher a tabela
   const dadosSalvos = localStorage.getItem("tanksData");
   if (dadosSalvos) {
-    tanksLista.querySelector("tbody").innerHTML = dadosSalvos;
-    tanksLista.classList.remove("lista-oculta");
+    tankListaBody.innerHTML = dadosSalvos;
   }
 }
 
 // Salvar os dados da tabela no LocalStorage
 function salvarDadosNoLocalStorage() {
-  const tabelaHTML = tanksLista.querySelector("tbody").innerHTML;
+  const tabelaHTML = tankListaBody.innerHTML;
   localStorage.setItem("tanksData", tabelaHTML);
 }
 

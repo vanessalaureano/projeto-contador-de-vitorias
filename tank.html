@@ -66,8 +66,8 @@
     <!-- Formulário de tanks -->
     <main class="container">
         <form id="tank-formulario">
-            <input type="text" id="capitao-receber" placeholder="Digite o nome do capitão">
-            <select id="raridade-receber">
+            <input type="text" id="tank-capitao-receber" placeholder="Digite o nome do capitão">
+            <select id="tank-raridade-receber">
                 <option value="Ancient">Ancient</option>
                 <option value="Legendary">Legendary</option>
                 <option value="Epic">Epic</option>
@@ -75,8 +75,8 @@
                 <option value="Uncommon">Uncommon</option>
                 <option value="Common">Common</option>
             </select>
-            <input type="text" id="tank-receber" placeholder="Digite o nome do tank">
-            <button id="tank-adicionar" class="botao">Adicionar tank</button>
+            <input type="text" id="tank-nome-receber" placeholder="Digite o nome do tank">
+            <button type="button" id="tank-adicionar" class="botao">Adicionar tank</button>
         </form>
 
         <!-- Lista de tanks -->
@@ -93,13 +93,14 @@
                         <th scope="col">Excluir</th>
                     </tr>
                 </thead>
-                <tbody>
+                <!-- Adicionando o atributo id="tanks-lista-body" ao corpo da tabela -->
+                <tbody id="tank-lista-body">
                     <!-- Aqui serão adicionados os tanks dinamicamente pelo JavaScript -->
                 </tbody>
             </table>
 
             <!-- Botão de remover todos os tanks -->
-            <button id="botao-remover-todos" class="botao-remover botao" title="Remover todos os tanks">
+            <button id="tank-botao-remover-todos" class="botao-remover botao" title="Remover todos os tanks">
                 Excluir tanks
             </button>
         </div>

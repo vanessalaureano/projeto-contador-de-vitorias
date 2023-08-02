@@ -1,74 +1,3 @@
-/* ... (seu CSS atual) ... */
-
-/* Estilos gerais */
-body {
-    /* ... (seu CSS atual) ... */
-}
-
-h1 {
-    /* ... (seu CSS atual) ... */
-}
-
-main {
-    /* ... (seu CSS atual) ... */
-}
-
-/* Estilos do header */
-.offcanvas-header,
-.offcanvas-body {
-    /* ... (seu CSS atual) ... */
-}
-
-/* Estilos do formulário */
-form {
-    /* ... (seu CSS atual) ... */
-}
-
-/* Estilos da tabela */
-table {
-    /* ... (seu CSS atual) ... */
-}
-
-thead th {
-    /* ... (seu CSS atual) ... */
-}
-
-tbody td {
-    /* ... (seu CSS atual) ... */
-}
-
-/* Estilos do botão de remover times */
-#botao-remover-todos {
-    /* ... (seu CSS atual) ... */
-}
-
-/* Estilos do botao */
-.botao {
-    /* ... (seu CSS atual) ... */
-}
-
-.botao:hover {
-    /* ... (seu CSS atual) ... */
-}
-
-/* Estilos do footer */
-.footer {
-    /* ... (seu CSS atual) ... */
-}
-
-footer a {
-    /* ... (seu CSS atual) ... */
-}
-
-footer a:hover {
-    /* ... (seu CSS atual) ... */
-}
-
-
-
-
-
-
 :root {
     --fonte-principal: 'Noto Sans', sans-serif;
     --fonte-secundaria: ;
@@ -123,7 +52,8 @@ main {
 /* Estilos para o header */
 .navbar {
     background-color: var(--cor-de-fundo-secundaria);
-    height: 45px; /* Ajuste a altura desejada aqui */
+    height: 45px;
+    /* Ajuste a altura desejada aqui */
 }
 
 .navbar a.nav-link {
@@ -202,4 +132,22 @@ footer a {
 footer a:hover {
     color: var(--cor-secundaria);
     transition: .3s;
+}
+
+/* Estilos do campo "Check" */
+#tanks-lista tbody td:first-child input[type="checkbox"] {
+    /* Estilização do checkbox */
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* Estilos do checkbox marcado */
+#tanks-lista tbody td:first-child input[type="checkbox"]:checked::before {
+    /* Adicionar o estilo desejado para o checkbox marcado */
+    content: "\f058";
+    /* Código do ícone de check do Bootstrap (usando a fonte Bootstrap Icons) */
+    font-family: 'Bootstrap Icons';
+    font-size: 1.2rem;
+    color: var(--cor-principal);
+    vertical-align: middle;
 }
