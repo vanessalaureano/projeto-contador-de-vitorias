@@ -33,8 +33,8 @@ body {
     min-height: 100vh; /* Para garantir que o footer fique no final da tela */
 }
 
-h1 {
-    color: var(--cor-secundaria);
+.titulo-principal {
+    color: var(--cor-principal);
     font-size: 30px;
     text-align: center;
     margin: 20px 0;
